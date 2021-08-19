@@ -20,13 +20,29 @@ const App = () => {
             <input
                 type="text"
                 className="search"
-                placeholder="Search..."
+                placeholder="Search Weather"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyPress={search}
             />
 
-            {weather.main && (
+            {weather === 'ERROR' &&
+                <div className="city">
+                    <h2 className="message">
+                        <span>No such place found! 🔍</span>
+                    </h2>
+                </div>
+            }
+
+            {weather !== 'ERROR' && !weather.main &&
+                <div className="city">
+                    <h2 className="message">
+                        <span>Enter a city name to get details!</span>
+                    </h2>
+                </div>
+            }
+
+            {weather !== "ERROR" && weather.main &&
                 <div className="city">
                     <h2 className="city-name">
                         <span>{weather.name}</span>
@@ -40,8 +56,10 @@ const App = () => {
                         <img className="city-icon" src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt={weather.weather[0].description} />
                         <p>{weather.weather[0].description}</p>
                     </div>
+                    <div className=""></div>
                 </div>
-            )}
+            }
+
         </div>
     )
 }
